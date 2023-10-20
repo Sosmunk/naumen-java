@@ -33,10 +33,11 @@ be merged before pushing» или в консоли «error: failed to push some
 ![alt text](https://github.com/Sosmunk/naumen-java/assets/104257106/c17ddf9a-df5e-4635-89c5-ddd76626c81c)
 
 8. **Объяснить почему не удалось запушить ветку**<br/>
-В ветке main появились изменения, которых еще нет в ветке task2-mesilov, соответственно сначала нужно сделать pull и замёржить изменения из другой ветки
+В ветке origin/main появились изменения, которых еще нет в локальном main. Сама task2-mesilov ответвляется от локального main, в которой еще не было изменений из remote main.
+Git не позволяет запушить изменения пока существует разница между удаленным и локальным main, от которого происходит rebase.
 9. **Найти способы запушить ветку без лишних изменений, т.е. не должно появиться ни одного 
 лишнего коммита (подсказка: есть два способа)**<br/>
-Можно выполнить rebase или force push.<br/>
+Можно выполнить force push или удалить ветку.<br/>
 Вариант с force push
  ![alt text](https://github.com/Sosmunk/naumen-java/assets/104257106/96b804ca-a36d-4959-b76e-362ffafca74c)
  ![alt text](https://github.com/Sosmunk/naumen-java/assets/104257106/75be3243-cf83-4380-8e43-78629a115764)
