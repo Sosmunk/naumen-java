@@ -1,7 +1,5 @@
 package ru.naumen.collection.task1;
 
-import ru.naumen.collection.task2.Ticket;
-
 import java.util.*;
 
 /**
@@ -33,10 +31,12 @@ import java.util.*;
 public class Task1 {
 
     /**
-     * Возвращает дубликаты пользователей, которые есть в обеих коллекциях
-     * Асимптотическая сложность : O(n)
+     * Возвращает дубликаты пользователей, которые есть в обеих коллекциях <br>
+     * Асимптотическая сложность : O(n) <br>
+     * Задача проверена на паре
      */
     public static List<User> findDuplicates(Collection<User> collA, Collection<User> collB) {
+        // Хранит в себе уникальные значения, доступ по ключу O(1)
         Set<User> uniqueFirst = new HashSet<>(collA);
         List<User> duplicates = new ArrayList<>();
         for (User user : collB) {
