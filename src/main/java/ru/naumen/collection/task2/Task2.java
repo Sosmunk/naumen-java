@@ -29,7 +29,10 @@ import java.util.Map;
  */
 public class Task2 {
 
+    // Коллекция для демонстрации работы, не является необходимой частью задачи
     private final List<Ticket> tickets = new ArrayList<>();
+
+    // Используется для быстрого доступа за O(1) по Ticket.id
     private final Map<Long, Lunch> additionalServices = new HashMap<>();
 
     public Task2() {
@@ -38,12 +41,14 @@ public class Task2 {
         this.buyTicket("volodya", Lunch.FOOD_AND_DRINKS);
     }
 
+    // Метод для демонстрации работы, не является необходимой частью задачи
     public void buyTicket(String client, Lunch lunch) {
         Ticket ticket = new Ticket(client);
         tickets.add(ticket);
         additionalServices.put(ticket.getId(), lunch);
     }
 
+    // Алгоритмическая сложность O(1)
     public Lunch getAdditionalServicesByTicket(Ticket ticket) {
         return additionalServices.getOrDefault(ticket.getId(), null);
     }
