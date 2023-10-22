@@ -9,7 +9,10 @@ import java.util.*;
  * Морфологию не учитываем.</p>
  * <p>Вывести на экран наиболее используемые (TOP) 10 слов и наименее используемые (LAST) 10 слов</p>
  * <p>Проверить работу на романе Льва Толстого “Война и мир”</p>
- *
+ * <b><p>Асипмтотическая сложность O(nlog(n))</p>
+ * На паре было сказано, что алгоритм медленный. <br>
+ * Какие оптимизации в данном случае возможны? <br>
+ * Так или иначе нужно хранить словарь частот слов, сортировать их по убыванию</b>
  * @author vpyzhyanov
  * @since 19.10.2023
  */
@@ -19,20 +22,12 @@ public class WarAndPeace {
             "Лев_Толстой_Война_и_мир_Том_1,_2,_3,_4_(UTF-8).txt");
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String inputPath = in.nextLine();
-        Path txtPath;
-        if (inputPath.isEmpty()) {
-            txtPath = WAR_AND_PEACE_FILE_PATH;
-        } else {
-            txtPath = Path.of(inputPath);
-        }
+        WordParser wp = new WordParser(WAR_AND_PEACE_FILE_PATH);
 
+        //Самая оптимальная структура данных для подсчета частот слов, O(1) запись и чтение
+        Map<String, Integer> wordCounter = countWords(wp);
 
-        WordParser wp = new WordParser(txtPath);
-
-        HashMap<String, Integer> wordCounter = countWords(wp);
-
+        // Нужно быстро обращаться к первым 10 и последним 10 элементам по индексу, поэтому используется List
         List<Map.Entry<String, Integer>> entryList = wordCounter
                 .entrySet()
                 .stream()
@@ -45,19 +40,14 @@ public class WarAndPeace {
         List<Map.Entry<String, Integer>> least10 = entryList
                 .subList(entryList.size()-Math.min(entryList.size(), 10),
                         entryList.size());
+
         System.out.println(top10);
         System.out.println(least10);
     }
 
-    public static HashMap<String, Integer>  countWords(WordParser wp) {
+    public static Map<String, Integer> countWords(WordParser wp) {
         HashMap<String, Integer> wordCounter = new HashMap<>();
-        wp.forEachWord(w -> {
-            if (!wordCounter.containsKey(w)) {
-                wordCounter.put(w, 1);
-            } else {
-                wordCounter.put(w, wordCounter.get(w) + 1);
-            }
-        });
+        wp.forEachWord(word -> wordCounter.put(word, wordCounter.getOrDefault(word, 0) + 1));
         return wordCounter;
     }
 }
