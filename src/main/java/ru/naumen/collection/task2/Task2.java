@@ -1,5 +1,10 @@
 package ru.naumen.collection.task2;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Дано:
  * <pre>
@@ -24,5 +29,26 @@ package ru.naumen.collection.task2;
  */
 public class Task2 {
 
-    // TODO
+    private final List<Ticket> tickets = new ArrayList<>();
+    private final Map<Long, Lunch> additionalServices = new HashMap<>();
+
+    public Task2() {
+        this.buyTicket("petya", Lunch.NO_PRODUCTS);
+        this.buyTicket("vasya", Lunch.DRINKS);
+        this.buyTicket("volodya", Lunch.FOOD_AND_DRINKS);
+    }
+
+    public void buyTicket(String client, Lunch lunch) {
+        Ticket ticket = new Ticket(client);
+        tickets.add(ticket);
+        additionalServices.put(ticket.getId(), lunch);
+    }
+
+    public Lunch getAdditionalServicesByTicket(Ticket ticket) {
+        return additionalServices.getOrDefault(ticket.getId(), null);
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
 }
