@@ -9,8 +9,5 @@ public class Main {
         List<User> l2 = List.of(new User("a", "b", "123".getBytes()),
                 new User("1", "2", "3".getBytes()));
         System.out.println(Task1.findDuplicates(l1, l2));
-
-
-
     }
 }
