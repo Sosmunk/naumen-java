@@ -1,7 +1,4 @@
-package ru.naumen.collection;
-
-import ru.naumen.collection.task1.Task1;
-import ru.naumen.collection.task1.User;
+package ru.naumen.collection.task1;
 
 import java.util.List;
 
