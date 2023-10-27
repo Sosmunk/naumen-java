@@ -9,10 +9,7 @@ import java.util.*;
  * Морфологию не учитываем.</p>
  * <p>Вывести на экран наиболее используемые (TOP) 10 слов и наименее используемые (LAST) 10 слов</p>
  * <p>Проверить работу на романе Льва Толстого “Война и мир”</p>
- * <b><p>Асипмтотическая сложность O(nlog(n)): O(n) операций подсчета слов, O(nlog(n)) - сортировка по убыванию</p>
- * На паре было сказано, что алгоритм медленный. <br>
- * Какие оптимизации в данном случае возможны? <br>
- * Так или иначе нужно хранить словарь частот слов, сортировать их по убыванию</b>
+ * <b><p>Асипмтотическая сложность O(n)</p>
  * @author vpyzhyanov
  * @since 19.10.2023
  */
@@ -22,32 +19,37 @@ public class WarAndPeace {
             "Лев_Толстой_Война_и_мир_Том_1,_2,_3,_4_(UTF-8).txt");
 
     public static void main(String[] args) {
+        WarAndPeace warAndPeace = new WarAndPeace();
         WordParser wp = new WordParser(WAR_AND_PEACE_FILE_PATH);
 
-        //Самая оптимальная структура данных для подсчета частот слов, O(1) запись и чтение
-        Map<String, Integer> wordCounter = countWords(wp);
+        //O(1) запись и чтение, оптимальнее чем обычная hashmap для итераций.
+        Map<String, Integer> wordCounter = warAndPeace.countWords(wp);
 
-        // Нужно быстро обращаться к первым 10 и последним 10 элементам по индексу, поэтому используется List
-        // Сортировка значений и добавление в список: O(nlog(n))
-        List<Map.Entry<String, Integer>> entryList = wordCounter
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .toList();
+        PriorityQueue<Map.Entry<String, Integer>> top10PriorityQueue = new PriorityQueue<>(11,
+                Map.Entry.comparingByValue());
 
-        List<Map.Entry<String, Integer>> top10 = entryList.
-                subList(0, Math.min(entryList.size(), 10));
+        PriorityQueue<Map.Entry<String, Integer>> least10PriorityQueue = new PriorityQueue<>(11,
+                (i1, i2) -> i2.getValue().compareTo(i1.getValue()));
 
-        List<Map.Entry<String, Integer>> least10 = entryList
-                .subList(entryList.size()-Math.min(entryList.size(), 10),
-                        entryList.size());
-
-        System.out.println(top10);
-        System.out.println(least10);
+        // Сортировка за O(1), так как сортируется по константе (10)
+        for (Map.Entry<String, Integer> word : wordCounter.entrySet() ) {
+            top10PriorityQueue.add(word);
+            if (top10PriorityQueue.size() > 10) {
+                top10PriorityQueue.poll();
+            }
+            least10PriorityQueue.add(word);
+            if (least10PriorityQueue.size() > 10) {
+                least10PriorityQueue.poll();
+            }
+        }
+        System.out.println("Наиболее используемые 10 слов по частоте");
+        new LinkedList<>(top10PriorityQueue).descendingIterator().forEachRemaining(System.out::println);
+        System.out.println("\nНаименее используемые 10 слов по частоте");
+        new LinkedList<>(least10PriorityQueue).descendingIterator().forEachRemaining(System.out::println);
     }
 
-    public static Map<String, Integer> countWords(WordParser wp) {
-        HashMap<String, Integer> wordCounter = new HashMap<>();
+    public Map<String, Integer> countWords(WordParser wp) {
+        LinkedHashMap<String, Integer> wordCounter = new LinkedHashMap<>();
         wp.forEachWord(word -> wordCounter.put(word, wordCounter.getOrDefault(word, 0) + 1));
         return wordCounter;
     }
