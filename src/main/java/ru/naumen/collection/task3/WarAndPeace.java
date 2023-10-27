@@ -22,7 +22,6 @@ public class WarAndPeace {
         WarAndPeace warAndPeace = new WarAndPeace();
         WordParser wp = new WordParser(WAR_AND_PEACE_FILE_PATH);
 
-        //O(1) запись и чтение, оптимальнее чем обычная hashmap для итераций.
         Map<String, Integer> wordCounter = warAndPeace.countWords(wp);
 
         PriorityQueue<Map.Entry<String, Integer>> top10PriorityQueue = new PriorityQueue<>(11,
@@ -49,6 +48,7 @@ public class WarAndPeace {
     }
 
     public Map<String, Integer> countWords(WordParser wp) {
+        //O(1) запись и чтение, оптимальнее чем обычная hashmap для итераций.
         LinkedHashMap<String, Integer> wordCounter = new LinkedHashMap<>();
         wp.forEachWord(word -> wordCounter.put(word, wordCounter.getOrDefault(word, 0) + 1));
         return wordCounter;
