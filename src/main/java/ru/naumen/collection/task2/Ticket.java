@@ -1,7 +1,5 @@
 package ru.naumen.collection.task2;
 
-import java.util.UUID;
-
 /**
  * Билет
  *
@@ -12,17 +10,18 @@ public class Ticket {
     private long id;
     private String client;
 
-    public Ticket(String client) {
-        UUID uuid = UUID.randomUUID();
-        this.id = uuid.getMostSignificantBits();
-        this.client = client;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ticket ticket = (Ticket) o;
+
+        return id == ticket.id;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getClient() {
-        return client;
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }
