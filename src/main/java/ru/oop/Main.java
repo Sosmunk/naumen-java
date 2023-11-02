@@ -22,7 +22,7 @@ public class Main {
      */
     public static void moveTo(Person person, Position destination) {
         Car car = new Car();
-        person.ride(car, destination);
+        car.movePerson(person, destination);
         person.walk(destination);
         assert person.getPosition() == destination;
     }
