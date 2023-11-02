@@ -1,13 +1,17 @@
 package ru.oop;
 
 /**
- * Машина
+ * Автобус
  */
-public class Car implements Vehicle {
-    public Car() {
+public class Bus implements Vehicle {
+    /**
+     * Номер автобуса
+     */
+    Integer number;
+
+    public Bus(Integer number) {
         // TODO
     }
-
     @Override
     public Position getPosition() {
         // TODO

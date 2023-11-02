@@ -1,6 +1,7 @@
 package ru.oop;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * <b>Задача 2:</b><br>
@@ -40,10 +41,22 @@ public class Main {
      * на любом, заранее определённом транспорте
      */
     public static void moveTo(Person person, Position destination) {
-        // TASK 2
+        // TASK 2 - 6 строк
         VehicleFactory vehicleFactory = new VehicleFactory();
         Vehicle vehicle = vehicleFactory.getVehicle();
+        person.walk(vehicle.getPosition());
         vehicle.movePerson(person, destination);
+        person.walk(destination);
+        assert person.getPosition() == destination;
+
+
+        // TASK 3
+        List<Vehicle> vehicles = Arrays.asList(new Car(), new Bus(1), new Bus(2));
+        for (int i = 1; i < vehicles.size(); i++) {
+            vehicles.get(i-1).movePerson(person, vehicles.get(i).getPosition());
+            person.walk(vehicles.get(i).getPosition());
+        }
+        vehicles.get(vehicles.size() - 1).movePerson(person, destination);
         person.walk(destination);
         assert person.getPosition() == destination;
     }
