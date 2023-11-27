@@ -31,11 +31,7 @@ public class ShoppingServiceTest {
      */
     @Test
     public void getAllProductsTest() {
-//        when(productDaoMock.getAll()).thenReturn(new ArrayList<Product>());
-//
-//        shoppingService.getAllProducts();
-//
-//        verify(productDaoMock, times(1)).getAll();
+
     }
 
     /**
@@ -45,13 +41,6 @@ public class ShoppingServiceTest {
      */
     @Test
     public void getProductByNameTest() {
-//        String name = "ТРИ КОРОЧКИ";
-//
-//        when(productDaoMock.getByName(name)).thenReturn(new Product());
-//
-//        shoppingService.getProductByName(name);
-//
-//        verify(productDaoMock, times(1)).getByName(name);
 
     }
 
@@ -132,7 +121,7 @@ public class ShoppingServiceTest {
      * чем есть в наличии
      */
     @Test
-    public void BuyMoreProductsThanExistsThrowsExceptionTest() throws BuyException {
+    public void BuyMoreProductsThanExistsThrowsExceptionTest() {
         Cart cart = new Cart(null);
         Cart spyCart = Mockito.spy(cart);
         Product product = new Product();
