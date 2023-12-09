@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 /**
  * Тестирование сервиса {@link ShoppingService}
  *
- * @author Пыжьянов Вячеслав
+ * @author Месилов Андрей
  */
 public class ShoppingServiceTest {
 
