@@ -49,7 +49,7 @@ public class ShoppingServiceTest {
      * Тест на покупку пустой корзины
      */
     @Test
-    public void EmptyCartBuyTest() throws BuyException {
+    public void emptyCartBuyTest() throws BuyException {
         Cart cart = new Cart(null);
 
         Assertions.assertFalse(shoppingService.buy(cart));
