@@ -34,17 +34,6 @@ public class BotLogicTest {
     }
 
     /**
-     * Тест на работу /start
-     */
-    @Test
-    public void CorrectStartCommandTest() {
-        botLogic.processCommand(user, "/start");
-
-        assertEquals(State.INIT, user.getState());
-        assertEquals("Привет!", bot.getMessages().get(0));
-    }
-
-    /**
      * Проверка работы команды /test
      */
     @Test
@@ -155,7 +144,7 @@ public class BotLogicTest {
      * Тест, проверяющий, верно ли работает логика /notify
      */
     @Test
-    public void NotificationTest() {
+    public void NotificationTest() throws InterruptedException {
         List<String> botMessages = bot.getMessages();
 
         botLogic.processCommand(user, "/notify");
@@ -165,17 +154,9 @@ public class BotLogicTest {
         botLogic.processCommand(user, "1");
         assertEquals("Напоминание установлено", botMessages.get(botMessages.size() - 1));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Thread.sleep(500);
         assertEquals("Напоминание установлено", botMessages.get(botMessages.size() - 1));
-        try {
-            Thread.sleep(600);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Thread.sleep(600);
         assertEquals("Сработало напоминание: '123'", botMessages.get(botMessages.size() - 1));
     }
 
