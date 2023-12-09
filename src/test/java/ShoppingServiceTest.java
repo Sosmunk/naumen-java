@@ -1,3 +1,4 @@
+import customer.Customer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,6 +43,22 @@ public class ShoppingServiceTest {
      */
     @Test
     public void getProductByNameTest() {
+
+    }
+
+    /**
+     * Проверка на получение той же самой корзины покупателя
+     */
+    @Test
+    public void getSameCustomerCartTest() {
+        Customer customer = new Customer(1, "+71234567890");
+        Cart cart = shoppingService.getCart(customer);
+        Product product = new Product();
+        product.setName("a");
+        product.addCount(10);
+        cart.add(product, 1);
+
+        Assertions.assertEquals(cart.getProducts(), shoppingService.getCart(customer).getProducts());
 
     }
 
