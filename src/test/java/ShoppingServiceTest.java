@@ -1,7 +1,6 @@
 import customer.Customer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import product.Product;
 import product.ProductDao;
 import shopping.BuyException;
@@ -139,18 +138,18 @@ public class ShoppingServiceTest {
      * чем есть в наличии
      */
     @Test
-    public void BuyMoreProductsThanExistsThrowsExceptionTest() {
+    public void BuyMoreProductsThanExistsThrowsExceptionTest() throws BuyException {
         Cart cart = new Cart(null);
-        Cart spyCart = Mockito.spy(cart);
+        Cart secondCart = new Cart(null);
         Product product = new Product();
         product.setName("A");
         product.addCount(5);
 
-        Map<Product, Integer> fakeCartProducts = new HashMap<>();
-        fakeCartProducts.put(product, 100);
-        doReturn(fakeCartProducts).when(spyCart).getProducts();
+        cart.add(product, 4);
+        secondCart.add(product, 4);
+        shoppingService.buy(secondCart);
 
-        BuyException buyException = Assertions.assertThrows(BuyException.class, () -> shoppingService.buy(spyCart));
+        BuyException buyException = Assertions.assertThrows(BuyException.class, () -> shoppingService.buy(cart));
         Assertions.assertEquals(
                 "В наличии нет необходимого количества товара " + "A",
                 buyException.getMessage());
