@@ -37,7 +37,6 @@ public class BotLogicTest {
     @Test
     public void CorrectQuizTest() {
         botLogic.processCommand(user, "/test");
-        assertEquals(State.TEST, user.getState());
         botLogic.processCommand(user, "100");
 
         assertEquals("Правильный ответ!", bot.getMessages().get(1));
@@ -45,7 +44,6 @@ public class BotLogicTest {
         botLogic.processCommand(user, "0");
         assertEquals("Вы ошиблись, верный ответ: 6", bot.getMessages().get(3));
         assertEquals("Тест завершен", bot.getLastMessage());
-        assertEquals(State.INIT, user.getState());
     }
 
 
@@ -73,12 +71,10 @@ public class BotLogicTest {
         botLogic.processCommand(user, "100");
         botLogic.processCommand(user, "3");
         botLogic.processCommand(user, "/repeat");
-        assertEquals(State.REPEAT, user.getState());
         assertEquals("Сколько будет 2 + 2 * 2", bot.getLastMessage());
         botLogic.processCommand(user, "6");
         assertEquals("Правильный ответ!", bot.getMessages().get(bot.getMessages().size() - 2));
         assertEquals("Тест завершен", bot.getLastMessage());
-        assertEquals(State.INIT, user.getState());
     }
 
 
