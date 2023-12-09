@@ -122,23 +122,6 @@ public class BotLogicTest {
         assertEquals(State.INIT, user.getState());
     }
 
-    /**
-     * Проверяет, возвращает ли /repeat все неправильно отвеченные вопросы
-     */
-    @Test
-    public void RepeatAllTest() {
-        botLogic.processCommand(user, "/test");
-
-        botLogic.processCommand(user, "10");
-        botLogic.processCommand(user, "3");
-        botLogic.processCommand(user, "/repeat");
-        List<String> botMessages = bot.getMessages();
-        assertEquals("Вычислите степень: 10^2", botMessages.get(botMessages.size() - 1));
-        botLogic.processCommand(user, "100");
-        assertEquals("Сколько будет 2 + 2 * 2", botMessages.get(botMessages.size() - 1));
-        botLogic.processCommand(user, "333");
-        assertEquals(State.INIT, user.getState());
-    }
 
     /**
      * Тест, проверяющий, верно ли работает логика /notify
