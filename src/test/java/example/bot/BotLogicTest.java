@@ -46,6 +46,45 @@ public class BotLogicTest {
         assertEquals("Тест завершен", bot.getLastMessage());
     }
 
+    /**
+     * Тест на остановку прохождения /test
+     */
+    @Test
+    public void StopCommandTest() {
+        botLogic.processCommand(user,"/test");
+        botLogic.processCommand(user, "/stop");
+        assertEquals("Тест завершен", bot.getLastMessage());
+        botLogic.processCommand(user, "100");
+        assertEquals("Такой команды пока не существует, или Вы допустили ошибку в написании. Воспользуйтесь командой /help, чтобы прочитать инструкцию.",
+                bot.getLastMessage());
+    }
+
+    /**
+     * Тест на остановку прохождения /repeat
+     */
+    @Test
+    public void StopCommandOnRepeatTest() {
+        botLogic.processCommand(user,"/test");
+        botLogic.processCommand(user, "100");
+        botLogic.processCommand(user, "0");
+        botLogic.processCommand(user, "/repeat");
+        botLogic.processCommand(user, "/stop");
+        assertEquals("Тест завершен", bot.getLastMessage());
+        botLogic.processCommand(user, "6");
+        assertEquals("Такой команды пока не существует, или Вы допустили ошибку в написании. Воспользуйтесь командой /help, чтобы прочитать инструкцию.",
+                bot.getLastMessage());
+    }
+
+    /**
+     * Тест на корректную работу команды /stop если не была введена команда /test или /repeat
+     */
+    @Test
+    public void StopCommandWhenNotInTest() {
+        botLogic.processCommand(user, "/stop");
+        assertEquals("Вы не начинали тестирование. Воспользуйтесь командой /help, чтобы прочитать инструкцию.",
+                bot.getLastMessage());
+    }
+
 
     /**
      * Тест, который проверяет отсутствие вопросов в /repeat при правильном ответе на тест
