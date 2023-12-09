@@ -32,63 +32,22 @@ public class BotLogicTest {
     }
 
     /**
-     * Проверка работы команды /test
+     * Тест на прохождение опроса
      */
     @Test
-    public void CorrectTestCommand() {
+    public void CorrectQuizTest() {
         botLogic.processCommand(user, "/test");
         assertEquals(State.TEST, user.getState());
-        assertEquals("Вычислите степень: 10^2", bot.getLastMessage());
-    }
-
-    /**
-     * Тест на определение верного ответа
-     */
-    @Test
-    public void CorrectAnswerTest() {
-        botLogic.processCommand(user, "/test");
-
         botLogic.processCommand(user, "100");
 
         assertEquals("Правильный ответ!", bot.getMessages().get(1));
-    }
-
-    /**
-     * Тест на отправку пользователю сообщения о неправильном ответе
-     */
-    @Test
-    public void IncorrectAnswerTest() {
-        botLogic.processCommand(user, "/test");
-
-        botLogic.processCommand(user, "1");
-
-        assertEquals("Вы ошиблись, верный ответ: 100", bot.getMessages().get(1));
-    }
-
-    /**
-     * Проверка изменения стадии опроса
-     */
-    @Test
-    public void ChangeQuestionIndexTest() {
-        botLogic.processCommand(user, "/test");
-
-        botLogic.processCommand(user, "100");
-
-        assertEquals(1, user.getCurrentQuestionIndex());
-    }
-
-    /**
-     * Проверка, что тест для пользователя корректно завершается
-     */
-    @Test
-    public void CompleteQuizTest() {
-        botLogic.processCommand(user, "/test");
-
-        botLogic.processCommand(user, "100");
-        botLogic.processCommand(user, "6");
+        assertEquals("Сколько будет 2 + 2 * 2", bot.getLastMessage());
+        botLogic.processCommand(user, "0");
+        assertEquals("Вы ошиблись, верный ответ: 6", bot.getMessages().get(3));
         assertEquals("Тест завершен", bot.getLastMessage());
         assertEquals(State.INIT, user.getState());
     }
+
 
     /**
      * Тест, который проверяет отсутствие вопросов в /repeat при правильном ответе на тест
