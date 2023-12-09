@@ -88,11 +88,10 @@ public class BotLogicTest {
         botLogic.processCommand(user, "123");
         assertEquals("Через сколько секунд напомнить?", bot.getLastMessage());
         botLogic.processCommand(user, "1");
-        assertEquals("Напоминание установлено", bot.getLastMessage());
 
-        Thread.sleep(500);
+        Thread.sleep(990);
         assertEquals("Напоминание установлено", bot.getLastMessage());
-        Thread.sleep(600);
+        Thread.sleep(20);
         assertEquals("Сработало напоминание: '123'", bot.getLastMessage());
     }
 
