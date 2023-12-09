@@ -76,6 +76,8 @@ public class BotLogicTest {
         assertEquals(State.REPEAT, user.getState());
         assertEquals("Сколько будет 2 + 2 * 2", bot.getLastMessage());
         botLogic.processCommand(user, "6");
+        assertEquals("Правильный ответ!", bot.getMessages().get(bot.getMessages().size() - 2));
+        assertEquals("Тест завершен", bot.getLastMessage());
         assertEquals(State.INIT, user.getState());
     }
 
