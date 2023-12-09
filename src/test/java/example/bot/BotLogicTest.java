@@ -3,8 +3,6 @@ package example.bot;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 public class BotLogicTest {
@@ -30,7 +28,7 @@ public class BotLogicTest {
 
         assertEquals("Такой команды пока не существует," +
                 " или Вы допустили ошибку в написании." +
-                " Воспользуйтесь командой /help, чтобы прочитать инструкцию.", bot.getMessages().get(0));
+                " Воспользуйтесь командой /help, чтобы прочитать инструкцию.", bot.getLastMessage());
     }
 
     /**
@@ -40,7 +38,7 @@ public class BotLogicTest {
     public void CorrectTestCommand() {
         botLogic.processCommand(user, "/test");
         assertEquals(State.TEST, user.getState());
-        assertEquals("Вычислите степень: 10^2", bot.getMessages().get(0));
+        assertEquals("Вычислите степень: 10^2", bot.getLastMessage());
     }
 
     /**
@@ -88,7 +86,7 @@ public class BotLogicTest {
 
         botLogic.processCommand(user, "100");
         botLogic.processCommand(user, "6");
-        assertEquals("Тест завершен", bot.getMessages().get(bot.getMessages().size() - 1));
+        assertEquals("Тест завершен", bot.getLastMessage());
         assertEquals(State.INIT, user.getState());
     }
 
@@ -103,7 +101,7 @@ public class BotLogicTest {
         botLogic.processCommand(user, "6");
 
         botLogic.processCommand(user, "/repeat");
-        assertEquals("Нет вопросов для повторения", bot.getMessages().get(bot.getMessages().size() - 1));
+        assertEquals("Нет вопросов для повторения", bot.getLastMessage());
     }
 
     /**
@@ -117,7 +115,7 @@ public class BotLogicTest {
         botLogic.processCommand(user, "3");
         botLogic.processCommand(user, "/repeat");
         assertEquals(State.REPEAT, user.getState());
-        assertEquals("Сколько будет 2 + 2 * 2", bot.getMessages().get(bot.getMessages().size() - 1));
+        assertEquals("Сколько будет 2 + 2 * 2", bot.getLastMessage());
         botLogic.processCommand(user, "6");
         assertEquals(State.INIT, user.getState());
     }
@@ -128,19 +126,17 @@ public class BotLogicTest {
      */
     @Test
     public void NotificationTest() throws InterruptedException {
-        List<String> botMessages = bot.getMessages();
-
         botLogic.processCommand(user, "/notify");
-        assertEquals("Введите текст напоминания", bot.getMessages().get(0));
+        assertEquals("Введите текст напоминания", bot.getLastMessage());
         botLogic.processCommand(user, "123");
-        assertEquals("Через сколько секунд напомнить?", botMessages.get(botMessages.size() - 1));
+        assertEquals("Через сколько секунд напомнить?", bot.getLastMessage());
         botLogic.processCommand(user, "1");
-        assertEquals("Напоминание установлено", botMessages.get(botMessages.size() - 1));
+        assertEquals("Напоминание установлено", bot.getLastMessage());
 
         Thread.sleep(500);
-        assertEquals("Напоминание установлено", botMessages.get(botMessages.size() - 1));
+        assertEquals("Напоминание установлено", bot.getLastMessage());
         Thread.sleep(600);
-        assertEquals("Сработало напоминание: '123'", botMessages.get(botMessages.size() - 1));
+        assertEquals("Сработало напоминание: '123'", bot.getLastMessage());
     }
 
 

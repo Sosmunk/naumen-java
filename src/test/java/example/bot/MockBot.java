@@ -24,4 +24,8 @@ public class MockBot implements Bot{
     public List<String> getMessages() {
         return messages;
     }
+
+    public String getLastMessage() {
+        return messages.get(messages.size() - 1);
+    }
 }
