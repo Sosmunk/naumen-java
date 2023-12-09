@@ -9,6 +9,7 @@ import shopping.ShoppingService;
 import shopping.ShoppingServiceImpl;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -128,7 +129,7 @@ public class ShoppingServiceTest {
         product.setName("A");
         product.addCount(5);
 
-        HashMap<Product, Integer> fakeCartProducts = new HashMap<>();
+        Map<Product, Integer> fakeCartProducts = new HashMap<>();
         fakeCartProducts.put(product, 100);
         doReturn(fakeCartProducts).when(spyCart).getProducts();
 
