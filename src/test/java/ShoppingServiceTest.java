@@ -8,9 +8,6 @@ import shopping.Cart;
 import shopping.ShoppingService;
 import shopping.ShoppingServiceImpl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.mockito.Mockito.*;
 
 /**
@@ -155,6 +152,25 @@ public class ShoppingServiceTest {
                 buyException.getMessage());
 
     }
+    /**
+     * Тест на покупку отрицательного количества товара
+     */
+    @Test
+    public void BuyNegativeProductCountTest() throws BuyException {
+        Cart cart = new Cart(null);
+        Product product = new Product();
+        product.setName("A");
+        product.addCount(5);
+        cart.add(product, -1);
+
+        shoppingService.buy(cart);
+        Assertions.assertEquals(5, product.getCount());
+        verify(productDaoMock, never()).save(product);
+    }
+
+    // Если правильно помню из лекции, корзина не опустошается.
+    // Это логическая ошибка, но сам по себе функционал не реализован
+    // Поэтому тестировать его нет смысла
 
 }
 
